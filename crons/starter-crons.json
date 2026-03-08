@@ -1,0 +1,66 @@
+[
+  {
+    "name": "morning-digest",
+    "schedule": "30 7 * * *",
+    "description": "Daily morning briefing: weather, calendar, open threads, action items, system status. Runs at 7:30 AM local time.",
+    "task": "Run morning-digest skill. Compile weather, calendar (next 2 days), open threads from pending-threads.json, uncompleted review items, and system status. Send as formatted digest.",
+    "priority": "high",
+    "notes": "Adjust schedule to your wake-up time. This is the most impactful cron — it sets up your whole day."
+  },
+  {
+    "name": "nightly-self-review",
+    "schedule": "0 1 * * *",
+    "description": "Audit the day's work: what was accomplished, what was missed, what needs carrying over. Produces a review artifact.",
+    "task": "Review today's memory file, pending-threads.json, and any open action items. Write a structured review to reviews/YYYY-MM-DD.md with completed items (✅), incomplete items (⬜), and recommendations for tomorrow.",
+    "priority": "high",
+    "notes": "The review is only as valuable as the follow-through. Morning digest should surface ⬜ items from the previous night's review."
+  },
+  {
+    "name": "config-watchdog",
+    "schedule": "0 */6 * * *",
+    "description": "Check OpenClaw config and cron health every 6 hours. Catches config drift and broken crons early.",
+    "task": "Run openclaw cron list and check for error states. Verify gateway is healthy. Check for available OpenClaw updates. Alert if anything is wrong.",
+    "priority": "medium",
+    "notes": "Especially important after OpenClaw updates — config formats can change between versions."
+  },
+  {
+    "name": "git-backup",
+    "schedule": "0 2 * * *",
+    "description": "Auto-commit and push workspace changes to git. Protects your agent's memory and configuration.",
+    "task": "cd ~/clawd && git add -A && git diff --cached --quiet || git commit -m 'Auto-backup: $(date +%Y-%m-%d)' && git push origin main 2>/dev/null || true",
+    "priority": "medium",
+    "notes": "Requires git remote configured. Runs at 2 AM to capture the full day's changes."
+  },
+  {
+    "name": "meeting-prep",
+    "schedule": "*/15 * * * *",
+    "description": "Check calendar every 15 minutes. If a meeting is 30 minutes away with unknown participants, trigger company-research skill.",
+    "task": "Check calendar for events in the next 30 minutes. For any meeting with participants not in the knowledge graph (life/areas/), run company-research skill and deliver the brief before the meeting starts.",
+    "priority": "high",
+    "notes": "This prevents the 'unprepared for meeting' failure mode. Research without delivery is wasted work — always push findings before the meeting."
+  },
+  {
+    "name": "weekly-synthesis",
+    "schedule": "0 20 * * 0",
+    "description": "Sunday evening: synthesize the week's patterns, rewrite entity summaries, identify stale threads. Produces a weekly report.",
+    "task": "Review all memory/YYYY-MM-DD.md files from this week. Rewrite summary.md files for active entities in life/areas/. Identify patterns for PATTERNS.md. Surface threads open >7 days. Write weekly synthesis to reviews/weekly-YYYY-MM-DD.md.",
+    "priority": "medium",
+    "notes": "This is the maintenance cycle that keeps the knowledge graph fresh and summaries accurate."
+  },
+  {
+    "name": "thread-cleanup",
+    "schedule": "0 18 * * *",
+    "description": "Evening thread cleanup: surface stale threads, draft follow-ups, update statuses. Runs at 6 PM.",
+    "task": "Read pending-threads.json. For threads >48h old, draft a follow-up message. For threads >14 days old, force a decision: escalate or drop. Update lastCheck timestamps.",
+    "priority": "medium",
+    "notes": "The 14-day rule is non-negotiable: no thread remains in limbo beyond 14 days without forced resolution."
+  },
+  {
+    "name": "fact-extraction",
+    "schedule": "0 22 * * *",
+    "description": "Extract durable facts from today's conversations into the knowledge graph. Runs at 10 PM.",
+    "task": "Run fact-extraction skill. Review today's memory file for entity mentions. Write new facts to life/areas/[type]/[name]/items.json. Skip casual chat and already-known info.",
+    "priority": "low",
+    "notes": "Quality over quantity. Only extract truly durable facts — not every casual mention."
+  }
+]
