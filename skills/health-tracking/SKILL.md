@@ -88,6 +88,71 @@ Add this to your `morning-digest` skill or HEARTBEAT.md:
 }
 ```
 
+## Illness Early Warning
+
+Your agent can cross-reference multiple biomarkers to detect illness **before you feel symptoms** — often 1-2 days early.
+
+### How It Works
+
+The illness detector compares your current metrics against a 14-day rolling baseline:
+
+| Signal | Threshold | What it means |
+|--------|-----------|---------------|
+| RHR spike | >5bpm above baseline | Heart working harder (immune response) |
+| HRV crash | >20% below baseline | Autonomic stress / inflammation |
+| SpO2 dip | Below 95% | Possible respiratory issue |
+| Respiratory rate | >0.5 breaths/min above avg | Body compensating |
+| Multi-day decline | 2+ days of recovery drops | Sustained stress, not just a bad night |
+
+**Risk levels:**
+- **1 signal** → Low (subtle note: "keep an eye on it")
+- **2 signals** → Moderate (alert: "you might be coming down with something")
+- **3+ signals** → High (urgent: "cancel non-essential meetings, rest")
+- **Consecutive days** compound the risk — 2 "low" days in a row → moderate
+
+### Example Script
+
+```bash
+#!/bin/bash
+# whoop-illness-check.sh — compare current metrics to 14-day baseline
+# Outputs JSON: {"illness_risk": "none|low|moderate|high", "signals": N, "details": "..."}
+
+# Fetch 14 days of recovery data from your wearable API
+# Extract: RHR, HRV, SpO2, respiratory rate, recovery score
+
+# Calculate baselines (exclude today)
+# Compare current day vs baseline
+# Count triggered signals
+# Track consecutive elevated days in a state file
+
+# Risk escalation:
+#   1 signal = low
+#   2 signals = moderate  
+#   3+ signals = high
+#   2+ consecutive "low" days = upgrade to moderate
+#   3+ consecutive "moderate" days = upgrade to high
+```
+
+See a full reference implementation in the WHOOP section above. Adapt the API calls for your specific wearable (Oura, Garmin, Apple Health export, etc.).
+
+### Illness Detection Cron
+
+```json
+{
+  "name": "illness-early-warning",
+  "schedule": { "kind": "cron", "expr": "45 7 * * 0-5", "tz": "America/Los_Angeles" },
+  "payload": {
+    "kind": "agentTurn",
+    "message": "Run the illness detection script. Parse output JSON. If illness_risk is 'none', stay silent. If 'low', send a subtle note. If 'moderate', send a health watch alert with specific biomarker details. If 'high', send an urgent alert recommending rest and doctor visit."
+  },
+  "sessionTarget": "isolated"
+}
+```
+
+> 💡 **Pair with the sleep score cron** — run illness check right after sleep data is scored, so you get one combined health briefing each morning.
+
+> ⚠️ **Not a medical device.** This catches patterns, not diagnoses. Always consult a doctor for real symptoms.
+
 ## Privacy Notes
 
 - Health data stays local — stored in your agent's memory files, never sent to third parties
