@@ -112,6 +112,41 @@ Below are heartbeat configurations for different types of users. Pick the one cl
 
 ---
 
+## Health-Optimized (Add-On for Any Role)
+
+Add these tasks to any heartbeat above if you use a wearable (WHOOP, Oura, Apple Health, Garmin, Fitbit).
+
+```markdown
+### Health & Recovery Check
+- Pull latest recovery/sleep score from wearable API
+- Compare to 7-day rolling average
+- If recovery is significantly below baseline (>20% drop), flag it and suggest lighter workload
+- During travel or illness: surface health data prominently in every digest
+- If device wasn't worn (religious observance, forgot, charging), skip gracefully — don't flag as "missing data"
+- Track sleep consistency: flag if bedtime varied >90 min from average this week
+
+### Recovery-Based Day Planning
+- 🟢 Green recovery (67%+): full intensity — stack hard meetings, deep work blocks
+- 🟡 Yellow recovery (34-66%): moderate — avoid back-to-back intense sessions
+- 🔴 Red recovery (<34%): light day — prioritize rest, reschedule if possible
+
+### Fitness Streaks
+- Track workout consistency (e.g., "4/5 days this week")
+- Surface streak data in morning digest for motivation
+- If 3+ days without activity, gentle nudge (not nagging)
+
+### Weekly Health Trends (Sunday)
+- Average recovery score this week vs last week
+- Sleep duration trend (improving / declining / stable)
+- Best and worst recovery days + what happened (travel, late night, etc.)
+```
+
+> 💡 **Timing tip:** Wearable sleep scores finalize after you wake up. Schedule health pulls for ~30 min after your usual wake time, not at midnight.
+
+> 💡 **Privacy tip:** Health data stays in your agent's local memory files. Summaries only — no raw biometric data stored.
+
+---
+
 ## Key Principles (All Use Cases)
 
 1. **Never default to HEARTBEAT_OK** — actually analyze before dismissing

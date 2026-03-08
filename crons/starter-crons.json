@@ -62,5 +62,13 @@
     "task": "Run fact-extraction skill. Review today's memory file for entity mentions. Write new facts to life/areas/[type]/[name]/items.json. Skip casual chat and already-known info.",
     "priority": "low",
     "notes": "Quality over quantity. Only extract truly durable facts — not every casual mention."
+  },
+  {
+    "name": "daily-health-summary",
+    "schedule": "30 7 * * *",
+    "description": "Pull recovery and sleep data from wearable (WHOOP, Oura, Apple Health). Compare to 7-day baseline. Flag low recovery days.",
+    "task": "Pull latest health/recovery data from wearable API (credentials in ~/.openclaw/credentials/). Compare to 7-day average. If recovery is below 50%, suggest a lighter day. If no data available (device not worn), skip gracefully. Include a one-line health status in the morning digest.",
+    "priority": "medium",
+    "notes": "Requires wearable API credentials. Pairs well with morning-digest — can be merged into a single cron. Sleep scores finalize after wake-up, so 7:30 AM timing works for most time zones."
   }
 ]

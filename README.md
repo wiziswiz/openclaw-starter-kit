@@ -85,6 +85,7 @@ openclaw-starter-kit/
 │   ├── company-research/            # Structured BD research briefs
 │   ├── x-research/                  # Twitter/X research & search
 │   ├── google/                      # Gmail, Calendar, Drive integration
+│   ├── health-tracking/              # Wearable health data (WHOOP, Oura, etc.)
 │   ├── healthcheck/                 # System security hardening
 │   ├── post-update-health-check/    # Post-update regression verification
 │   ├── baseline-ui/                 # UI quality baseline enforcement
@@ -205,6 +206,13 @@ Skills are specialized instruction files that teach your agent how to handle spe
 | `fact-extraction` | Extract and organize facts from conversations into memory |
 | `google` | Gmail search/send, Calendar events, Drive file access |
 
+### Health & Wellness
+| Skill | What it does |
+|-------|-------------|
+| `health-tracking` | Wearable integration (WHOOP, Oura, Apple Health, Garmin) — recovery scores, sleep trends, fitness streaks |
+
+> 💡 Your agent can pull your daily recovery score and weave it into your morning digest. Green day? Stack the hard meetings. Red day? Go easy. See [`skills/health-tracking/SKILL.md`](skills/health-tracking/SKILL.md) for setup.
+
 ### System & Security
 | Skill | What it does |
 |-------|-------------|
@@ -236,6 +244,7 @@ The kit includes 8 starter cron templates (`crons/starter-crons.json`):
 | 🛡️ **Config Watchdog** | Every 15 min | Detect silent config changes or drift |
 | 💾 **Git Backup** | 3:00 AM daily | Auto-commit and push workspace changes |
 | 📞 **Meeting Prep** | Every 30 min (business hours) | Research upcoming call participants |
+| 💪 **Health Summary** | 7:30 AM daily | Pull wearable recovery/sleep, flag low days |
 | 🧠 **Weekly Synthesis** | Sunday 10 AM | Consolidate the week's facts and patterns |
 | 📋 **Thread Cleanup** | 7:00 PM daily | Surface stale open threads needing follow-up |
 | 📝 **Fact Extraction** | 9:00 PM daily | Extract durable facts from today's conversations |
