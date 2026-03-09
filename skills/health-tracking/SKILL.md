@@ -135,6 +135,31 @@ The illness detector compares your current metrics against a 14-day rolling base
 
 See a full reference implementation in the WHOOP section above. Adapt the API calls for your specific wearable (Oura, Garmin, Apple Health export, etc.).
 
+### ELI5 Mode (Recommended)
+
+Most people don't know what "HRV crashed 22% below baseline" means. Add an **ELI5 section** to your illness alerts so you actually understand what your body is telling you.
+
+Tell your agent to include plain-language translations for each signal:
+
+| Signal | ELI5 |
+|--------|------|
+| RHR elevated | "Your resting heart rate is higher than usual — your body is working harder even at rest, like it's fighting something off." |
+| HRV crashed | "Your heart rhythm variability dropped — think of it like your body switching from 'chill mode' to 'battle mode.'" |
+| SpO2 low | "Your blood oxygen is lower than normal — could be sensor position, or could mean congestion/inflammation." |
+| Resp rate up | "You're breathing faster in your sleep — your body needed more air, which can signal your immune system ramping up." |
+| Multi-day decline | "Your recovery has been dropping for 3 days straight — one bad day is noise, but a trend means something." |
+
+Add this to your cron prompt:
+
+```
+For ALL non-none risk levels, include an ELI5 section:
+
+🧒 **ELI5 — What this means:**
+[One simple sentence per signal, like you're explaining to a friend who doesn't know what HRV is]
+
+Vary the wording each time so it doesn't feel robotic.
+```
+
 ### Illness Detection Cron
 
 ```json
@@ -143,7 +168,7 @@ See a full reference implementation in the WHOOP section above. Adapt the API ca
   "schedule": { "kind": "cron", "expr": "45 7 * * 0-5", "tz": "America/Los_Angeles" },
   "payload": {
     "kind": "agentTurn",
-    "message": "Run the illness detection script. Parse output JSON. If illness_risk is 'none', stay silent. If 'low', send a subtle note. If 'moderate', send a health watch alert with specific biomarker details. If 'high', send an urgent alert recommending rest and doctor visit."
+    "message": "Run the illness detection script. Parse output JSON. If illness_risk is 'none', stay silent. For any non-none risk: include biomarker details AND an ELI5 section explaining each signal in plain language. If 'low', append as a subtle note. If 'moderate', send a health watch alert. If 'high', send an urgent alert recommending rest and doctor visit."
   },
   "sessionTarget": "isolated"
 }
