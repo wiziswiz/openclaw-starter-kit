@@ -30,7 +30,7 @@ This starter kit fixes that with:
 - **Three-layer memory** — facts, daily events, and learned patterns that persist across sessions
 - **Self-correcting behavior** — corrections you make are permanently stored and loaded every session
 - **Proactive analysis** — your agent checks things on its own (system health, stale threads, upcoming meetings)
-- **15 pre-built skills** — from GitHub repo analysis to morning digests to Twitter research
+- **18 pre-built skills** — from GitHub repo analysis to morning digests to Twitter research
 - **8 cron job templates** — scheduled tasks that make your agent feel alive
 
 ---
@@ -77,13 +77,16 @@ openclaw-starter-kit/
 │       ├── companies/               #   → Company entities
 │       └── projects/                #   → Project entities
 │
-├── 🛠️ skills/                       ← 15 pre-built skills
+├── 🛠️ skills/                       ← 18 pre-built skills
 │   ├── repo-analyzer/               # GitHub repo trust scoring & due diligence
 │   ├── spawn-agent/                 # Sub-agent orchestration
 │   ├── fact-extraction/             # Memory fact extraction & management
 │   ├── morning-digest/              # Daily morning briefing
 │   ├── company-research/            # Structured BD research briefs
-│   ├── x-research/                  # Twitter/X research & search
+│   ├── x-research/                  # Twitter/X research & search (free)
+│   ├── x-research-api/             # Twitter/X research via paid API
+│   ├── adversarial-review/          # Cross-model adversarial plan review
+│   ├── consensus-researcher/        # Multi-source weighted consensus research
 │   ├── google/                      # Gmail, Calendar, Drive integration
 │   ├── health-tracking/              # Wearable health data (WHOOP, Oura, etc.)
 │   ├── healthcheck/                 # System security hardening
@@ -197,6 +200,9 @@ Skills are specialized instruction files that teach your agent how to handle spe
 | `repo-analyzer` | Trust-score any GitHub repo (security, code quality, contributor patterns) |
 | `company-research` | Structured research briefs for outreach or due diligence |
 | `x-research` | Search Twitter/X for real-time perspectives and expert opinions |
+| `x-research-api` | Paid X/Twitter API research (higher engagement results). Companion to x-research — use when you need tweets with 1K+ likes vs free version's ~23 likes. |
+| `consensus-researcher` | Multi-source research (Reddit, HN, Amazon, YouTube, expert sites) with weighted consensus scoring. Great for product/market research. |
+| `adversarial-review` | Cross-model adversarial plan review — two models alternate writer/reviewer until convergence. Use before any major build or implementation. |
 
 ### Productivity
 | Skill | What it does |
@@ -228,6 +234,22 @@ Skills are specialized instruction files that teach your agent how to handle spe
 | `fixing-motion-performance` | Fix janky animations and rendering bottlenecks |
 | `vercel-react-best-practices` | 57 prioritized React/Next.js performance rules from Vercel |
 | `web-design-guidelines` | Web Interface Guidelines compliance review |
+
+---
+
+## 🔄 Keeping Skills Updated
+
+Third-party skills can receive upstream updates. A weekly cron checks for new commits automatically and pings you if anything's worth pulling.
+
+To manually check or pull updates for a skill:
+
+```bash
+cd ~/.openclaw/skills/<skill-name>
+git fetch && git log HEAD..origin/main --oneline
+git pull  # if updates look safe
+```
+
+For SME (Structured Memory Engine), updates require a rebase — see `~/Projects/Structured-Memory-Engine/README.md` for the merge guide.
 
 ---
 
