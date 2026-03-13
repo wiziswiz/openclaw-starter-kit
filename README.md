@@ -30,7 +30,7 @@ This starter kit fixes that with:
 - **Three-layer memory** — facts, daily events, and learned patterns that persist across sessions
 - **Self-correcting behavior** — corrections you make are permanently stored and loaded every session
 - **Proactive analysis** — your agent checks things on its own (system health, stale threads, upcoming meetings)
-- **18 pre-built skills** — from GitHub repo analysis to morning digests to Twitter research
+- **19 pre-built skills** — from GitHub repo analysis to morning digests to Twitter research
 - **8 cron job templates** — scheduled tasks that make your agent feel alive
 
 ---
@@ -77,7 +77,7 @@ openclaw-starter-kit/
 │       ├── companies/               #   → Company entities
 │       └── projects/                #   → Project entities
 │
-├── 🛠️ skills/                       ← 18 pre-built skills
+├── 🛠️ skills/                       ← 19 pre-built skills
 │   ├── repo-analyzer/               # GitHub repo trust scoring & due diligence
 │   ├── spawn-agent/                 # Sub-agent orchestration
 │   ├── fact-extraction/             # Memory fact extraction & management
@@ -92,6 +92,7 @@ openclaw-starter-kit/
 │   ├── healthcheck/                 # System security hardening
 │   ├── post-update-health-check/    # Post-update regression verification
 │   ├── baseline-ui/                 # UI quality baseline enforcement
+│   ├── source-library/              # Auto-file & cross-reference shared URLs
 │   ├── fixing-accessibility/        # WCAG accessibility fixes
 │   ├── fixing-metadata/             # SEO & Open Graph metadata
 │   ├── fixing-motion-performance/   # Animation performance optimization
@@ -211,6 +212,7 @@ Skills are specialized instruction files that teach your agent how to handle spe
 | `spawn-agent` | Deploy sub-agents for parallel or long-running tasks |
 | `fact-extraction` | Extract and organize facts from conversations into memory |
 | `google` | Gmail search/send, Calendar events, Drive file access |
+| `source-library` | Auto-file shared URLs with structured summaries, cross-referencing, confidence decay, and conflict detection. Your agent's second brain for everything you read. |
 
 ### Health & Wellness
 | Skill | What it does |
