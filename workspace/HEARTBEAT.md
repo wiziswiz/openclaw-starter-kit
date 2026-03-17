@@ -32,6 +32,16 @@ Heartbeat behavior changes based on current time:
 - During normal work: if you notice the same multi-step task 3+ times, create a skill for it
 - On heartbeat: review last 24h of work patterns. If a new skill candidate emerges, create it and mention it briefly.
 
+### 4b. Calendar Nudge for Stale Threads
+- Run `scripts/calendar-nudge.sh` to find pending threads 24h+ old needing owner input
+- For each candidate: create a 5-min calendar event
+  - Title: "Agent needs input: [thread subject]"
+  - Time: next available slot during working hours
+  - Description: thread context + what's needed to unblock
+- After creating event, mark `calendarNudge: true` on the thread in pending-threads.json
+- Max 2 nudges per heartbeat (don't spam the calendar)
+- Skip threads in deferred/resolved/waiting-response status
+
 ### 5. Fact Extraction
 - Review recent conversations for durable facts about entities (people, companies, projects)
 - Write new facts to `life/areas/[type]/[name]/items.json`
