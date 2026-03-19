@@ -31,7 +31,7 @@ This starter kit fixes that with:
 - **Self-correcting behavior** — corrections you make are permanently stored and loaded every session
 - **Proactive analysis** — your agent checks things on its own (system health, stale threads, upcoming meetings)
 - **19 pre-built skills** — from GitHub repo analysis to morning digests to Twitter research
-- **8 cron job templates** — scheduled tasks that make your agent feel alive
+- **10 cron job templates** — scheduled tasks that make your agent feel alive
 
 ---
 
@@ -99,7 +99,7 @@ openclaw-starter-kit/
 │   ├── vercel-react-best-practices/ # 57 React/Next.js performance rules
 │   └── web-design-guidelines/       # Web interface compliance review
 │
-├── ⏰ crons/                        ← 8 scheduled job templates
+├── ⏰ crons/                        ← 10 scheduled job templates
 │   └── starter-crons.json           # Morning digest, nightly review, etc.
 │
 ├── 📚 docs/                         ← Guides
@@ -259,7 +259,7 @@ For SME (Structured Memory Engine), updates require a rebase — see `~/Projects
 
 Cron jobs are what make your agent feel **alive** — it does things without being asked.
 
-The kit includes 8 starter cron templates (`crons/starter-crons.json`):
+The kit includes 10 starter cron templates (`crons/starter-crons.json`):
 
 | Cron | Schedule | What it does |
 |------|----------|-------------|
@@ -272,6 +272,7 @@ The kit includes 8 starter cron templates (`crons/starter-crons.json`):
 | 🧠 **Weekly Synthesis** | Sunday 10 AM | Consolidate the week's facts and patterns |
 | 📋 **Thread Cleanup** | 7:00 PM daily | Surface stale open threads needing follow-up |
 | 📝 **Fact Extraction** | 9:00 PM daily | Extract durable facts from today's conversations |
+| 🧹 **Session Cleanup** | Sunday 4 AM | Prune old cron/sub-agent session files (they accumulate forever and bloat memory) |
 
 → Step-by-step setup in [`examples/example-cron-setup.md`](examples/example-cron-setup.md)
 

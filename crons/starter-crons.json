@@ -5,15 +5,15 @@
     "description": "Daily morning briefing: weather, calendar, open threads, action items, system status. Runs at 7:30 AM local time.",
     "task": "Run morning-digest skill. Compile weather, calendar (next 2 days), open threads from pending-threads.json, uncompleted review items, and system status. Send as formatted digest.",
     "priority": "high",
-    "notes": "Adjust schedule to your wake-up time. This is the most impactful cron — it sets up your whole day."
+    "notes": "Adjust schedule to your wake-up time. This is the most impactful cron \u2014 it sets up your whole day."
   },
   {
     "name": "nightly-self-review",
     "schedule": "0 1 * * *",
     "description": "Audit the day's work: what was accomplished, what was missed, what needs carrying over. Produces a review artifact.",
-    "task": "Review today's memory file, pending-threads.json, and any open action items. Write a structured review to reviews/YYYY-MM-DD.md with completed items (✅), incomplete items (⬜), and recommendations for tomorrow.",
+    "task": "Review today's memory file, pending-threads.json, and any open action items. Write a structured review to reviews/YYYY-MM-DD.md with completed items (\u2705), incomplete items (\u2b1c), and recommendations for tomorrow.",
     "priority": "high",
-    "notes": "The review is only as valuable as the follow-through. Morning digest should surface ⬜ items from the previous night's review."
+    "notes": "The review is only as valuable as the follow-through. Morning digest should surface \u2b1c items from the previous night's review."
   },
   {
     "name": "config-watchdog",
@@ -21,7 +21,7 @@
     "description": "Check OpenClaw config and cron health every 6 hours. Catches config drift and broken crons early.",
     "task": "Run openclaw cron list and check for error states. Verify gateway is healthy. Check for available OpenClaw updates. Alert if anything is wrong.",
     "priority": "medium",
-    "notes": "Especially important after OpenClaw updates — config formats can change between versions."
+    "notes": "Especially important after OpenClaw updates \u2014 config formats can change between versions."
   },
   {
     "name": "git-backup",
@@ -37,7 +37,7 @@
     "description": "Check calendar every 15 minutes. If a meeting is 30 minutes away with unknown participants, trigger company-research skill.",
     "task": "Check calendar for events in the next 30 minutes. For any meeting with participants not in the knowledge graph (life/areas/), run company-research skill and deliver the brief before the meeting starts.",
     "priority": "high",
-    "notes": "This prevents the 'unprepared for meeting' failure mode. Research without delivery is wasted work — always push findings before the meeting."
+    "notes": "This prevents the 'unprepared for meeting' failure mode. Research without delivery is wasted work \u2014 always push findings before the meeting."
   },
   {
     "name": "weekly-synthesis",
@@ -61,7 +61,7 @@
     "description": "Extract durable facts from today's conversations into the knowledge graph. Runs at 10 PM.",
     "task": "Run fact-extraction skill. Review today's memory file for entity mentions. Write new facts to life/areas/[type]/[name]/items.json. Skip casual chat and already-known info.",
     "priority": "low",
-    "notes": "Quality over quantity. Only extract truly durable facts — not every casual mention."
+    "notes": "Quality over quantity. Only extract truly durable facts \u2014 not every casual mention."
   },
   {
     "name": "daily-health-summary",
@@ -69,6 +69,14 @@
     "description": "Pull recovery and sleep data from wearable (WHOOP, Oura, Apple Health). Compare to 7-day baseline. Flag low recovery days.",
     "task": "Pull latest health/recovery data from wearable API (credentials in ~/.openclaw/credentials/). Compare to 7-day average. If recovery is below 50%, suggest a lighter day. If no data available (device not worn), skip gracefully. Include a one-line health status in the morning digest.",
     "priority": "medium",
-    "notes": "Requires wearable API credentials. Pairs well with morning-digest — can be merged into a single cron. Sleep scores finalize after wake-up, so 7:30 AM timing works for most time zones."
+    "notes": "Requires wearable API credentials. Pairs well with morning-digest \u2014 can be merged into a single cron. Sleep scores finalize after wake-up, so 7:30 AM timing works for most time zones."
+  },
+  {
+    "name": "session-cleanup",
+    "schedule": "0 4 * * 0",
+    "description": "Weekly cleanup of old cron/sub-agent session files. Without this, session data accumulates indefinitely and can bloat memory, slow responses, or cause OOM crashes.",
+    "task": "Run: bash ~/clawd/scripts/session-cleanup.sh\nReport the before/after numbers. If nothing was cleaned, say so briefly.",
+    "priority": "medium",
+    "notes": "Every cron run and sub-agent spawn creates a .jsonl session file that persists forever. This prunes files older than 48h and rebuilds sessions.json. All cron outputs should already be captured in memory files \u2014 the session transcripts are redundant."
   }
 ]
