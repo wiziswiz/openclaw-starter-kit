@@ -55,11 +55,22 @@ openclaw cron add --name "morning-digest" --schedule "30 7 * * *" \
 ```
 
 ### 2. Nightly Self-Review (high value)
-Audit what was accomplished today. Produces a review file.
+Dual-model adversarial audit. Two independent AI reviewers (different models) audit your assistant's last 24 hours in parallel, then merge findings, apply safe fixes, and track unresolved items across nights with escalation pressure.
+
+The full prompt is in `crons/starter-crons.json` — it's too long for a one-liner. To install it:
 ```bash
-openclaw cron add --name "nightly-self-review" --schedule "0 1 * * *" \
-  --task "Review today's work. Write structured review to reviews/YYYY-MM-DD.md with completed and incomplete items."
+# Create the review from the starter kit cron config, or ask your agent:
+"Create a nightly self-review cron using the prompt from crons/starter-crons.json"
 ```
+
+**What it does each night:**
+1. Spawns two reviewers (different models) that independently audit rule adherence, missed tasks, cron health, security, memory gaps, and recurring patterns
+2. Merges both audits into a consensus review with a health score
+3. Applies safe fixes within a locked write scope (can't break your config)
+4. Tracks carryover items — unresolved findings escalate each night
+5. Proposes skill candidates for recurring failures (but never installs them)
+
+**Prerequisites:** SOUL.md with active rules to grade against, daily memory files, a `reviews/` directory, and 2+ models configured.
 
 ### 3. Git Backup (essential)
 Protect your agent's memory with automatic git commits.
