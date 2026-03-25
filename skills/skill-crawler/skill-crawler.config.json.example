@@ -1,17 +1,82 @@
 {
-  "telegram_chat_id": "YOUR_CHAT_ID",
+  "telegram_chat_id": "298796273",
   "installed_skills": [
     {
-      "name": "example-skill",
-      "local_path": "~/.openclaw/skills/example-skill",
-      "github_repo": "owner/example-skill"
+      "name": "source-library",
+      "local_path": "~/.openclaw/skills/source-library",
+      "github_repo": "Don-GBot/source-library"
+    },
+    {
+      "name": "trade",
+      "local_path": "~/.openclaw/skills/trade",
+      "github_repo": "rohunvora/paste-trade-skill"
+    },
+    {
+      "name": "adversarial-review",
+      "local_path": "~/.openclaw/skills/adversarial-review",
+      "github_repo": "Don-GBot/adversarial-review"
+    },
+    {
+      "name": "flight-search",
+      "local_path": "~/.openclaw/skills/flight-search",
+      "github_repo": "wiziswiz/flight-search-agent"
+    },
+    {
+      "name": "consensus-researcher",
+      "local_path": "~/.openclaw/skills/consensus-researcher",
+      "github_repo": "Bryptobricks/consensus-researcher"
+    },
+    {
+      "name": "frontend-slides",
+      "local_path": "~/.openclaw/skills/frontend-slides",
+      "github_repo": "zarazhangrui/frontend-slides"
+    },
+    {
+      "name": "credit-repair",
+      "local_path": "~/.openclaw/skills/credit-repair",
+      "github_repo": "wiziswiz/credit-repair-skill"
+    },
+    {
+      "name": "x-research",
+      "local_path": "~/clawd/skills/x-research-api",
+      "github_repo": "rohunvora/x-research-skill"
+    },
+    {
+      "name": "repo-analyzer",
+      "github_repo": "Don-GBot/Repo-Analyzer",
+      "local_path": "~/.openclaw/skills/repo-analyzer"
+    },
+    {
+      "name": "sme",
+      "github_repo": "Bryptobricks/Structured-Memory-Engine",
+      "local_path": "~/Projects/Structured-Memory-Engine"
     }
   ],
   "watch_repos": [
     {
-      "name": "cool-agent-framework",
-      "github_repo": "someuser/cool-agent-framework",
-      "context": "Borrowed the retry logic pattern from their agent runner"
+      "name": "openclaw",
+      "github_repo": "openclaw/openclaw",
+      "context": "Core platform \u2014 track for new features, breaking changes, skill API updates"
+    },
+    {
+      "name": "clawhub-skills",
+      "github_repo": "openclaw/skills",
+      "context": "Official skill registry \u2014 new community skills"
+    },
+    {
+      "name": "bd-intern",
+      "github_repo": "mmashiat/bd-intern",
+      "context": "movement.yaml architecture + /agenda format"
+    },
+    {
+      "name": "siftly",
+      "github_repo": "viperrcrypto/Siftly",
+      "context": "Bookmark vision pipeline + 4-stage AI enrichment"
+    },
+    {
+      "name": "gigabrain",
+      "github_repo": "legendaryvibecoder/gigabrain",
+      "context": "Memory layer architecture review"
     }
   ]
 }
